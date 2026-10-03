@@ -199,6 +199,34 @@ PROJECT_STRUCTURE = {
         ),
     },
 
+    # -------------------- deployment --------------------
+    "deployment": {
+        "Dockerfile": (
+            "FROM python:3.11-slim\n\n"
+            "WORKDIR /app\n\n"
+            "COPY requirements/requirements.txt requirements/requirements.txt\n"
+            "RUN pip install --no-cache-dir -r requirements/requirements.txt\n\n"
+            "COPY . .\n\n"
+            "CMD [\"python\", \"src/main.py\"]\n"
+        ),
+        "docker-compose.yml": (
+            "version: \"3.9\"\n\n"
+            "services:\n"
+            "  app:\n"
+            "    build:\n"
+            "      context: ..\n"
+            "      dockerfile: deployment/Dockerfile\n"
+            "    env_file:\n"
+            "      - ../.env\n"
+            "    volumes:\n"
+            "      - ../embeddings:/app/embeddings\n"
+            "      - ../logs:/app/logs\n"
+        ),
+        ".dockerignore": (
+            "__pycache__/\n*.pyc\n.venv/\nvenv/\n.git/\nnotebooks/\ndata/raw/\ndata/processed/\n"
+        ),
+    },
+
     # -------------------- tests --------------------
     "tests": {"__init__.py": PY_INIT},
     "tests/unit": {"__init__.py": PY_INIT},
@@ -361,6 +389,11 @@ Gen-AI-Learning/
 \u2502
 \u251c\u2500\u2500 config/
 \u2502   \u2514\u2500\u2500 config.yaml              # Non-secret app configuration
+\u2502
+\u251c\u2500\u2500 deployment/
+\u2502   \u251c\u2500\u2500 Dockerfile               # Container image for the app
+\u2502   \u251c\u2500\u2500 docker-compose.yml       # Local container orchestration
+\u2502   \u2514\u2500\u2500 .dockerignore
 \u2502
 \u251c\u2500\u2500 tests/
 \u2502   \u251c\u2500\u2500 unit/
