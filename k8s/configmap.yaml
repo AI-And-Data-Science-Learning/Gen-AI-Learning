@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gen-ai-config
+  namespace: gen-ai-learning
+data:
+  DEFAULT_MODEL: "claude-sonnet-4-6"
+  VECTOR_STORE_PATH: "embeddings"
+  LOG_LEVEL: "INFO"
