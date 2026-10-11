@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gen-ai-app
+  namespace: gen-ai-learning
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gen-ai-app
+  template:
+    metadata:
+      labels:
+        app: gen-ai-app
+    spec:
+      containers:
+        - name: gen-ai-app
+          image: gen-ai-learning:latest
+          envFrom:
+            - configMapRef:
+                name: gen-ai-config
+            - secretRef:
+                name: gen-ai-secrets

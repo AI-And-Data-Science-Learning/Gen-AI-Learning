@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: gen-ai-service
+  namespace: gen-ai-learning
+spec:
+  selector:
+    app: gen-ai-app
+  ports:
+    - port: 80
+      targetPort: 8000
